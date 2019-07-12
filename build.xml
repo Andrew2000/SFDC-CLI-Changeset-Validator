@@ -1,0 +1,34 @@
+<project name="retrieveChangeSet" xmlns:sf="antlib:com.salesforce" default="all" basedir=".">
+<property file="build.properties" />
+<taskdef name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask"/>
+
+<target name ="all"
+      depends="cleanBuild, retrieveChangeSet, deployEmptyCheckOnly"/>
+
+<target name="cleanBuild">
+      <delete dir="changeSet" />
+      <mkdir dir="changeSet" />
+</target>
+
+<target name="retrieveChangeSet">    
+      <echo level="info">retrieving changeset</echo>
+      <sf:retrieve 
+            username="${sf.usernameStaging}" 
+            password="${sf.passwordStaging}" 
+            serverurl="${sf.testserverurl}" 
+            retrieveTarget="./changeSet"
+            packageNames="${sf.releaseNumber}" />
+</target>
+
+<target name="deployEmptyCheckOnly">
+      <echo level="info">Testing Validation</echo>
+      <sf:deploy
+            checkOnly="true"
+            username="${sf.usernameProduction}"
+            password="${sf.passwordProduction}"
+            serverurl="${sf.serverurl}"
+            deployRoot="./changeSet"
+            testLevel="RunLocalTests">
+      </sf:deploy>
+</target>
+</project>
