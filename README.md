@@ -17,12 +17,12 @@ sf.releaseNumber = This is the exact name of change set in source org
 - try using a naming convention such as Release 1.1.1 or 1.1.1 for ease of use
 
 # Running or Running single build steps
-run via "ant -lib lib" to use the jars in the library folder  
-you can also run the targets individually such as "ant -lib retrieveChangeSet"  
+run via "ant -lib lib" to use the jars in the library folder and run all 3 build steps   
+you can also run the targets individually such as "ant -lib lib retrieveChangeSet"  
 this is helpful if you are blocked by dependencies but don't want to remove metadata from the change set  
-- you can delete/edit metadata locally in the changeSet folder and then run "ant -lib deployEmptyCheckOnly" when ready
+- you can delete/edit metadata locally in the changeSet folder and then run "ant -lib lib deployEmptyCheckOnly" when ready
 
 # build.xml steps
-1. Deletes changeSet folder and recreates empty so we start with clean metadata  
-2. Retrieves metadata from change set by name from source org  
-3. Validates against target org
+1. Deletes changeSet folder and recreates empty so we start with clean metadata "ant -lib lib cleanBuild"   
+2. Retrieves metadata from change set by name from source org "ant -lib lib retrieveChangeSet"  
+3. Validates against target org "ant -lib lib deployEmptyCheckOnly"
